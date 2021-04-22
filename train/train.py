@@ -76,12 +76,12 @@ def train(model, train_loader, epochs, optimizer, loss_fn, device):
             batch_X, batch_y = batch
             batch_X = batch_X.to(device)
             batch_y = batch_y.to(device)
-            model.zero_grad()
+            optimizer.zero_grad()
             output_model = model(batch_X)
-            loss_model = loss_fn(output, batch_y)
+            loss_model = loss_fn(output_model, batch_y)
             loss_model.backward()
-            model.step()
-            loss_total += loss_model.data.item()
+            optimizer.step()
+            total_loss += loss_model.data.item()
             
         print("Epoch: {}, BCELoss: {}".format(epoch, total_loss / len(train_loader)))
 
